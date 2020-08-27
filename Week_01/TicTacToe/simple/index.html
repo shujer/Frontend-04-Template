@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TicTacToe Simple</title>
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      #root {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      #board {
+        width: 60vmin;
+        height: 60vmin;
+        background-color: #383a3f;
+      }
+      .cell {
+        width: 20vmin;
+        height: 20vmin;
+        line-height: 20vmin;
+        font-size: 10vmin;
+        box-sizing: border-box;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+
+        color: #383a3f;
+        border: 2px solid #1f2124;
+      }
+      .cell.enable {
+        cursor: pointer;
+      }
+      .cell.disable {
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"><div id="board"></div></div>
+    <script>
+      window.onload = () => {
+        const pattern = [
+          [2, 0, 0],
+          [0, 1, 0],
+          [0, 0, 0],
+        ];
+        const board = document.getElementById("board");
+        let color = 1;
+        const show = () => {
+          // 减少 dom 操作
+          const dom = document.createDocumentFragment();
+          pattern.forEach((_col, y) => {
+            _col.forEach((_row, x) => {
+              let cell = document.createElement("div");
+              cell.classList.add("cell");
+              cell.classList.add(pattern[y][x] === 0 ? "enable" : "disable");
+              cell.innerText =
+                pattern[y][x] === 2 ? "⭕" : pattern[y][x] === 1 ? "❌" : "";
+              cell.addEventListener("click", () => move(x, y));
+              dom.appendChild(cell);
+            });
+          });
+          board.innerHTML = "";
+          board.appendChild(dom);
+        };
+
+        const clone = (obj) => {
+          return JSON.parse(JSON.stringify(obj));
+        };
+        const move = (x, y) => {
+          pattern[y][x] = color;
+          show();
+          let icon = color === 2 ? "⭕" : color === 1 ? "❌" : "";
+          if (check(pattern, x, y)) {
+            alert(icon + " is the winner");
+          }
+          color = 3 - color;
+          icon = color === 2 ? "⭕" : color === 1 ? "❌" : "";
+          if (willWin(pattern, color)) {
+            console.log(icon + " will win");
+          }
+        };
+        const willWin = (_pattern, color) => {
+          let willWin = false;
+          let pattern = clone(_pattern);
+          _pattern.some((_col, y) => {
+            _col.some((_row, x) => {
+              if (!pattern[y][x]) {
+                pattern = clone(_pattern);
+                pattern[y][x] = color;
+                willWin = check(pattern, x, y);
+              }
+              return willWin;
+            });
+            return willWin;
+          });
+          return willWin;
+        };
+
+        /**
+         * 实际上，我们只需要检查新加的每一步是否有符合条件的选项；没必要检查每个点；
+         */
+        const check = (pattern, x, y) => {
+          // 检查行
+          const checkRow = pattern[y].every(
+            (_ele, i) => pattern[y][i] === pattern[y][x]
+          );
+          if (checkRow) {
+            return true;
+          }
+          // 检查列
+          const checkCol = pattern[x].every(
+            (_ele, i) => pattern[i][x] === pattern[y][x]
+          );
+          if (checkCol) {
+            return true;
+          }
+          // 当点处于斜线上的位置再进行检查
+          if (x + y === 2) {
+            // 由左到右 ==> 由上到下 ==> \
+            const checkTTL = pattern[y].every(
+              (_ele, i) => pattern[i][2 - i] === pattern[y][x]
+            );
+            if (checkTTL) {
+              return true;
+            }
+            // 由左到右 ==> 由下到上 ==> /
+            const checkLTT = pattern[y].every(
+              (_ele, i) => pattern[2 - i][i] === pattern[y][x]
+            );
+            if (checkLTT) {
+              return true;
+            }
+          }
+          return false;
+        };
+        show();
+      };
+    </script>
+  </body>
+</html>
