@@ -129,18 +129,20 @@
           }
           // 当点处于斜线上的位置再进行检查
           if (x + y === 2) {
-            // 由左到右 ==> 由上到下 ==> \
-            const checkTTL = pattern[y].every(
-              (_ele, i) => pattern[i][2 - i] === pattern[y][x]
-            );
-            if (checkTTL) {
-              return true;
-            }
             // 由左到右 ==> 由下到上 ==> /
             const checkLTT = pattern[y].every(
               (_ele, i) => pattern[2 - i][i] === pattern[y][x]
             );
             if (checkLTT) {
+              return true;
+            }
+          }
+          if (x - y === 0) {
+            // 由左到右 ==> 由上到下 ==> \
+            const checkTTL = pattern[y].every(
+              (_ele, i) => pattern[i][i] === pattern[y][x]
+            );
+            if (checkTTL) {
               return true;
             }
           }
