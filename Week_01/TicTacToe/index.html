@@ -44,31 +44,6 @@
       button + button {
         margin-left: 4px;
       }
-      #tips_btn {
-        position: relative;
-        position: fixed;
-        bottom: 40px;
-        right: 40px;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        border: 4px solid #fff1b9;
-      }
-      #tips_btn.hidden > #tips {
-        display: none;
-      }
-
-      #tips {
-        position: absolute;
-        bottom: 40px;
-        right: 0;
-        width: 200px;
-        height: 300px;
-        overflow-y: auto;
-        font-size: 16px;
-        background-color: #fff1b9;
-        transition: all 0.5s;
-      }
       #board {
         width: 60vmin;
         height: 60vmin;
@@ -113,50 +88,17 @@
         <label for="size">棋盘格数</label>
       </div>
       <div id="button_bar">
-        <button id="start" onclick="game.start()">开始</button>
-        <button id="pause" onclick="game.stop()">暂停</button>
-        <button id="restart" onclick="restart()">重新开始</button>
+        <button id="restart" onclick=" game.restart()">重新开始</button>
       </div>
       <div id="board"></div>
-      <div id="tips_btn" class="hidden" onclick="toggle()">
-        <pre id="tips"></pre>
-      </div>
     </div>
     <script src="./tictactoe.js"></script>
     <script>
-      var tips = document.getElementById("tips");
-      var tipsBtn = document.getElementById("tips_btn");
       var game = new Game({
         root: "board",
         size: 3,
-        color: 1,
-        onWillWin: (role) => {
-          let text = document.createElement("p");
-          text.innerText = `${role} will win.`;
-          tips.appendChild(text);
-        },
-        onWin: (role) => {
-          let text = document.createElement("p");
-          text.innerText = `${role} is the winner.`;
-          tips.appendChild(text);
-          alert(role + " is the winner");
-        },
       });
-      var toggle = function () {
-        if (tipsBtn.classList.contains("hidden")) {
-          tipsBtn.classList.remove("hidden");
-          tipsBtn.classList.add("show");
-        } else {
-          tipsBtn.classList.remove("show");
-          tipsBtn.classList.add("hidden");
-        }
-      };
-      var restart = function () {
-        tips.innerHTML = "";
-        game.restart();
-      };
       var sizeChange = function (event) {
-        tips.innerHTML = "";
         let size = event.target.value;
         game.resize(parseInt(size));
       };
