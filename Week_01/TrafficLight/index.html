@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Traffic Light</title>
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      #root {
+        width: 100%;
+        height: 100%;
+        background-color: #333;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .light {
+        width: 600px;
+        height: 150px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+      .light_item {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: #343434;
+      }
+      .red.blink {
+        background-color: tomato;
+      }
+      .green.blink {
+        background-color: green;
+      }
+      .yellow.blink {
+        background-color: yellow;
+      }
+      #next {
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="light">
+        <div class="light_item green"></div>
+        <div class="light_item yellow"></div>
+        <div class="light_item red"></div>
+      </div>
+      <button id="next">next</button>
+    </div>
+    <script src="./generator.js"></script>
+  </body>
+</html>
