@@ -1,3 +1,5 @@
+## 学习笔记
+
 ### 三子棋
 
 - 学习了怎么逐步拆分一个问题
@@ -7,7 +9,7 @@
 
 ### Object.create
 
--  创建一个新对象
+- 创建一个新对象
 - 😚 将新对象的内部属性 [[Prototype]] 指向传入的原型对象
 - 有参数的话，将属性赋值给新对象
 - 返回新对象
@@ -18,4 +20,4 @@
 - callback
 - Promise
 - async / await
-- 😍 async generator 
+- 😍 async generator
