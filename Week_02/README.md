@@ -2,13 +2,13 @@
 
 ### 地图寻路问题
 
-- [BFS & DFS 相关总结](https://github.com/shujer/DailyAlgorithm/issues/1)
-
+- **广度优先算法**，是从起点开始，相临近点逐步向外扩散，直到找到终点的过程。[BFS & DFS 相关总结](https://github.com/shujer/DailyAlgorithm/issues/1)
+- **Dijkstra 算法**，使用一个优先队列，计算每个节点距离起点得得移动代价，在移动过程中优先选择代价小的节点遍历。
+- **最佳优先搜索**，我们认为如果可以预估终点的方向可以更快的到达终点。同样使用一个优先队列，但是以每个节点距离终点的距离作为优先级，每次选择到终点移动代价的节点进行遍历。
+- **A\* 启发式算法**，可以认为是结合前面几种算法的改进算法。启发函数：`f(n) = g(n) + h(n)`
 - 二叉堆
 
-- A\* 启发式算法
-
-### 基于 LL 构建语法树
+### 构建语法树
 
 - `1024 + 10 * 12` 的 echarts 可视化结果如下
   ![1024 + 10 * 12](https://user-images.githubusercontent.com/25917294/92252684-2603a400-ef01-11ea-896d-3cbee24ef2b2.jpg)
@@ -48,6 +48,7 @@ for (let v of fun()) {
 
 ### 参考文档
 
+- [路径规划之 A\* 算法](https://zhuanlan.zhihu.com/p/54510444)
 - 行内元素的样式问题 —— 设置 `font-size: 0px` ： [去除 inline-block 元素间距](https://www.zhangxinxu.com/wordpress/2012/04/inline-block-space-remove-%E5%8E%BB%E9%99%A4%E9%97%B4%E8%B7%9D/)
 - [RegExp.prototype.exec()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec)
 - [performance-of-array-push-vs-array-unshift](https://stackoverflow.com/questions/44031591/performance-of-array-push-vs-array-unshift/44032020#44032020)
