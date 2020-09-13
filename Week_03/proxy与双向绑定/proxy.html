@@ -1,0 +1,94 @@
+<input id="r" type="range" min="0" max="255" />
+<input id="g" type="range" min="0" max="255" />
+<input id="b" type="range" min="0" max="255" />
+<div id="color" style="width: 100px; height: 100px"></div>
+<script>
+  let callbacks = new Map();
+  let reactivties = new Map();
+  let usedReactivties = [];
+  let object = {
+    r: 1,
+    g: 1,
+    b: 1,
+  };
+
+  let po = reactive(object);
+  // value ===> dom
+  effect(() => {
+    document.getElementById("r").value = po.r;
+  });
+  effect(() => {
+    document.getElementById("g").value = po.g;
+  });
+  effect(() => {
+    document.getElementById("b").value = po.b;
+  });
+  // dom ===> value
+  document
+    .getElementById("r")
+    .addEventListener("input", (event) => (po.r = event.target.value));
+  document
+    .getElementById("g")
+    .addEventListener("input", (event) => (po.g = event.target.value));
+  document
+    .getElementById("b")
+    .addEventListener("input", (event) => (po.b = event.target.value));
+
+  effect(() => {
+    document.getElementById(
+      "color"
+    ).style.backgroundColor = `rgb(${po.r}, ${po.g}, ${po.b})`;
+  });
+  // 3. 事件监听
+  function effect(callback) {
+    usedReactivties = [];
+    callback();
+    for (let reactivity of usedReactivties) {
+      let [obj, prop] = reactivity;
+      //将对象作为键值
+      if (!callbacks.get(obj)) {
+        callbacks.set(obj, new Map());
+      }
+      // 对象中的属性作为新的键值，保存变量调用时的回调函数
+      if (!callbacks.get(obj).has(prop)) {
+        callbacks.get(obj).set(prop, []);
+      }
+      callbacks.get(obj).get(prop).push(callback);
+    }
+  }
+  // 1. 如何实现对象监听？
+  // 2. proxy 的应用: Vue reactive (代理)
+  function reactive(object) {
+    if (reactivties.has(object)) {
+      return reactivties.get(object);
+    }
+
+    let proxy = new Proxy(object, {
+      set(obj, prop, val) {
+        obj[prop] = val;
+        if (callbacks.get(obj)) {
+          let cals = callbacks.get(obj).get(prop);
+          if (cals) {
+            // 设置值时触发保存的回调
+            for (let callback of cals) {
+              callback();
+            }
+          }
+        }
+        return obj[prop];
+      },
+      get(obj, prop) {
+        // 获取实际调用了哪些变量
+        usedReactivties.push([obj, prop]);
+        if (typeof obj[prop] === "object") {
+          return reactive(obj[prop]);
+        }
+        return obj[prop];
+      },
+    });
+    reactivties.set(object, proxy);
+    return proxy;
+  }
+
+  //4. 只在对于变量变化时触发回调
+</script>
