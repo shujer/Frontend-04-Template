@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tutorial Demo</title>
+  </head>
+  <body>
+    <div id="mountNode"></div>
+    <!-- 引入 G6 -->
+    <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.7.1/dist/g6.min.js"></script>
+
+    <script>
+      const initData = {
+        nodes: [{ id: "globalThis", label: "globalThis" }],
+        edges: [],
+      };
+      const nameSet = new Set();
+      function find(obj, name) {
+        if (!obj || typeof obj !== "object" || nameSet.has(name)) {
+          return;
+        }
+        //https://flaviocopes.com/how-to-list-object-methods-javascript/
+        Object.getOwnPropertyNames(obj).forEach((attr) => {
+          if (obj[attr] === null) {
+            return;
+          } else if (typeof obj[attr] === "object") {
+            initData.nodes.push({ id: attr, label: attr });
+            initData.edges.push({ source: name, target: attr, label: "" });
+            nameSet.add(attr);
+            find(obj[attr], attr);
+          } else if (typeof obj[attr] === "function") {
+            try {
+              let o = new obj[attr]();
+              initData.nodes.push({ id: attr, label: attr });
+              initData.edges.push({ source: name, target: attr, label: "" });
+              nameSet.add(attr);
+            } catch {}
+          }
+        });
+      }
+      find(globalThis, "globalThis");
+      const graph = new G6.Graph({
+        container: "mountNode", // 指定挂载容器
+        width: 1200, // 图的宽度
+        height: 800, // 图的高度
+        fitView: true,
+      });
+      graph.data(initData); // 加载数据
+      graph.render(); // 渲染
+    </script>
+  </body>
+</html>
