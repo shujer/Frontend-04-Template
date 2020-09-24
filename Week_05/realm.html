@@ -11,7 +11,7 @@
 
     <script>
       const initData = {
-        nodes: [{ id: "globalThis", label: "globalThis" }],
+        nodes: [{ id: "globalThis", label: "globalThis", x: 600, y: 400 }],
         edges: [],
       };
       const nameSet = new Set();
@@ -23,11 +23,6 @@
         Object.getOwnPropertyNames(obj).forEach((attr) => {
           if (obj[attr] === null) {
             return;
-          } else if (typeof obj[attr] === "object") {
-            initData.nodes.push({ id: attr, label: attr });
-            initData.edges.push({ source: name, target: attr, label: "" });
-            nameSet.add(attr);
-            find(obj[attr], attr);
           } else if (typeof obj[attr] === "function") {
             try {
               let o = new obj[attr]();
