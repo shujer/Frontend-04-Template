@@ -1,0 +1,23 @@
+<html>
+  <div id="a">
+    <span>1</span>
+    <p>2</p>
+    <a>3</a>
+    <div>4</div>
+  </div>
+  <script>
+    let element = document.getElementById("a");
+    function reverseChildren(element) {
+      let range = new Range();
+      range.selectNodeContents(element);
+      let fragment = range.extractContents();
+      let i = fragment.childNodes.length;
+      //  使用 fragment 减少直接的 dom 操作
+      while (i-- > 0) {
+        fragment.appendChild(fragment.childNodes[i]);
+      }
+      element.appendChild(fragment);
+    }
+    reverseChildren(element);
+  </script>
+</html>

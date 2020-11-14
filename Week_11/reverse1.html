@@ -1,0 +1,19 @@
+<html>
+  <div id="a">
+    <span>1</span>
+    <p>2</p>
+    <a>3</a>
+    <div>4</div>
+  </div>
+  <script>
+    let element = document.getElementById("a");
+    function reverseChildren(element) {
+      let i = element.childNodes.length;
+    //   appendChild 会自动 remove 再 insert
+      while (i-- > 0) {
+        element.appendChild(element.childNodes[i]);
+      }
+    }
+    reverseChildren(element);
+  </script>
+</html>

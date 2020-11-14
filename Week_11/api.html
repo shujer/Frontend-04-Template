@@ -1,0 +1,35 @@
+<html>
+  <body>
+    <div id="a" style="background-color: powderblue; height: 400px">
+      <div id="b" style="background-color: pink; height: 200px"></div>
+    </div>
+    <script>
+      let a = document.querySelector("#a");
+      let b = document.querySelector("#b");
+      // sample1, 默认冒泡
+      // result: b,a
+      a.addEventListener("click", function () {
+        console.log("a");
+      });
+      b.addEventListener("click", function () {
+        console.log("b");
+      });
+      // sample2, 捕获阶段
+      // result: a1, b1
+      a.addEventListener(
+        "click",
+        function () {
+          console.log("a1");
+        },
+        { capture: true }
+      );
+      b.addEventListener(
+        "click",
+        function () {
+          console.log("b1");
+        },
+        true
+      );
+    </script>
+  </body>
+</html>
