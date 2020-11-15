@@ -1,0 +1,23 @@
+<div class="outer">
+  <div class="inner"></div>
+  <div class="inner"></div>
+  <div class="inner"></div>
+</div>
+<style>
+  /* 
+  当设置了行内布局时，格式化产生的空格会影响布局，导致不能三等分
+  需要设置 outer font-size = 0
+  */
+
+  .outer {
+    width: 101px;
+    font-size: 0;
+  }
+
+  .inner {
+    width: 33.33%;
+    height: 300px;
+    display: inline-block;
+    outline: solid 1px blue;
+  }
+</style>
