@@ -37,15 +37,21 @@ URL — HTTP —> HTML
 - 流
 - 端口
 - `require('net')`
-- 包
+- 包/数据包
 - IP 地址
 - libnet: 构造 IP 包并且发送 / libpcap：从网卡抓包
 
 ### HTTP Request / HTTP Response
 
 - HTTP 是文本型协议
+- HTTP Request
+  - request line：请求类型 协议版本
+  - headers
+  - 空白行
+  - body
 - HTTP Response
   - status liine: 协议版本 状态码 状态文本
   - headers
+  - 空行
   - body
     - chunk body
